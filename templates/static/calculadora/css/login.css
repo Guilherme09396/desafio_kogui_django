@@ -1,0 +1,12 @@
+body {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    height: 100vh;
+}
+
+.login-container {
+    max-width: 400px;
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+}

@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 
 def login_view(request):
-    return HttpResponse("Hello, this is the login page!")
+    return render(request, 'login.html')
