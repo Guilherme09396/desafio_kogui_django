@@ -24,13 +24,12 @@ class RegisterService(RegisterAbc):
 
     def register(self):
         self.user = Usuario(
-            nome=self.nome,
+            name=self.nome,
             email=self.email,
-            senha=self.senha
         )
 
         self.verify_user_exists()
         self.verify_passwords_match()
-        self.user.senha = make_password(self.user.senha)
+        self.user.set_password(self.senha)
         self.user.save()
-        print(f"Registrando usuário: {self.user.nome} com e-mail: {self.user.email}")
+        print(f"Registrando usuário: {self.user.name} com e-mail: {self.user.email}")
