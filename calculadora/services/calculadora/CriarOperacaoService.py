@@ -1,10 +1,11 @@
 from calculadora.models import Operacao
 
 class CriarOperacaoService:
-    def __init__(self, parametros, resultado):
-        self.parametros = parametros
-        self.resultado = resultado
+    def __init__(self, parameters, result, user):
+        self.parameters = parameters
+        self.result = result
+        self.user = user
     
     def execute(self):
-        operacao = Operacao(parametros=self.parametros, resultado=self.resultado)
+        operacao = Operacao(parameters=self.parameters, result=self.result, idUser=self.user)
         operacao.save()

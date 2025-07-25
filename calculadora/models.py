@@ -34,8 +34,10 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return self.name
 
 class Operacao(models.Model):
-    parametros = models.CharField(max_length=150)
-    resultado = models.CharField(max_length=150)
+    idOperation = models.IntegerField(primary_key=True)
+    idUser = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    parameters = models.CharField(max_length=150)
+    result = models.CharField(max_length=150)
     dtOfInclusion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

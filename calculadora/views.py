@@ -58,7 +58,8 @@ class CalculadoraView(LoginRequiredMixin, View):
         return render(request, 'calculadora.html')
     
     def post(self, request):
+        user = request.user
         body = json.loads(request.body)
-        service = CriarOperacaoService(parametros=body['parametros'], resultado=body['resultado'])
+        service = CriarOperacaoService(parameters=body['parametros'], result=body['resultado'], user=user)
         service.execute()
         return HttpResponse(status=201)
