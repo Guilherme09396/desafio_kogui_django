@@ -2,12 +2,27 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from .services.usuario.RegisterService import RegisterService
+from .services.usuario.LoginService import LoginService
 from django.contrib import messages
-import json
 
-def login_view(request):
-    return render(request, 'login.html')
+class LoginView(View):
+    template_name = 'login.html'
 
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+        service = LoginService(email=email, senha=senha, request=request)
+        try:
+            service.login()
+            messages.success(request, "Login realizado com sucesso!")
+            return render(request, "login.html")
+        except ValueError as e:
+            messages.error(request, str(e))
+            return redirect('calculadora:login')
+        
 
 class RegistroView(View):
     template_name = 'registro.html'
