@@ -4,6 +4,9 @@ from django.views import View
 from .services.usuario.RegisterService import RegisterService
 from .services.usuario.LoginService import LoginService
 from django.contrib import messages
+from .services.calculadora.CriarOperacaoService import CriarOperacaoService
+from django.contrib.auth.mixins import LoginRequiredMixin
+import json
 
 class LoginView(View):
     template_name = 'login.html'
@@ -44,6 +47,18 @@ class RegistroView(View):
             messages.error(request, str(e))
             return redirect('calculadora:registro')
 
-class CalculadoraView(View):
+class CalculadoraView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "Você precisa estar logado para acessar esta página.")
+            return redirect(f"{self.get_login_url()}")
+        return super().dispatch(request, *args, **kwargs)
+    
     def get(self, request):
         return render(request, 'calculadora.html')
+    
+    def post(self, request):
+        body = json.loads(request.body)
+        service = CriarOperacaoService(parametros=body['parametros'], resultado=body['resultado'])
+        service.execute()
+        return HttpResponse(status=201)

@@ -32,3 +32,11 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.name
+
+class Operacao(models.Model):
+    parametros = models.CharField(max_length=150)
+    resultado = models.CharField(max_length=150)
+    dtOfInclusion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.parametros
