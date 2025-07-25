@@ -6,9 +6,9 @@ function getCookie() {
 
     if(document.cookie && document.cookie != '') {
         const cookies = document.cookie.split(';')
-        for (let x of cookies) {
-            if(x.includes('csrftoken')) {
-                csrfToken = x.split('=')[1]
+        for (let cookie of cookies) {
+            if(cookie.includes('csrftoken')) {
+                csrfToken = cookie.split('=')[1]
             }
         }
     }
@@ -16,15 +16,17 @@ function getCookie() {
     return csrfToken
 }
 
-function salvarOperacao() {
+function salvarOperacao(parametros, resultado) {
     fetch('/calculadora/', {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': getCookie()
         },
-        body: JSON.stringify({parametros: '1+1', resultado: '2'})
-    }).then(v => console.log(v)).catch(e => console.log(e))
+        body: JSON.stringify({parametros, resultado})
+    }).then(
+        window.location.href = `/calculadora/resultado`
+    ).catch(e => console.log(e))
 }
 
 
@@ -43,8 +45,8 @@ function verificarTecla(tecla) {
     let teclasOperadores = ['+', '-', '*', '/', '%'];
     let teclaIgual = '=';
 
-    if (tecla === 'Escape' || tecla == 'c') {
-        display.innerText = '';
+    if (tecla == 'c') {
+        window.location.href = '/calculadora'
         return
     }
 
@@ -68,7 +70,7 @@ function verificarTecla(tecla) {
     if (tecla === teclaIgual || tecla === 'Enter') {
         let expressao = display.innerText.replace(/ /g, '')
         display.innerText = eval(expressao)
-        salvarOperacao()
+        salvarOperacao(parametros=expressao, resultado=display.innerText)
         return;
     }
 
