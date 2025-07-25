@@ -32,6 +32,17 @@ export function checkKey(key) {
 
     if (key === equalKey || key === 'Enter') {
         let expression = display.innerText.replace(/ /g, '')
+        expression = reformExpression(expression)
+        if(!expression.match(/\d+[+/%*-]\d+/gm)) {
+            display.innerText = "ERROR"
+            return
+        }
+        
+        if(expression.match(/\d+[/][0]/) && !expression.match(/\d+[/][0]./)) {
+            display.innerText = "INDEFINIDO"
+            return
+        }
+
         display.innerText = eval(expression)
         saveOperation(expression, display.innerText)
         return;
@@ -43,6 +54,15 @@ export function checkKey(key) {
 
     addKey(key);
 
+}
+
+function reformExpression(expression) {
+    const operation = expression.match(/[+*/%-]/)
+    let [number1, number2] = expression.split(operation)
+    number1 = Number(number1)
+    number2 = Number(number2)
+    const newExpression = `${number1}${operation}${number2}`
+    return newExpression
 }
 
 function addKey(key) {
