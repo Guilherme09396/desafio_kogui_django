@@ -1,6 +1,34 @@
 const display = document.querySelector('.display');
 let ePositivo = true
 
+function getCookie() {
+    let csrfToken = null;
+
+    if(document.cookie && document.cookie != '') {
+        const cookies = document.cookie.split(';')
+        for (let x of cookies) {
+            if(x.includes('csrftoken')) {
+                csrfToken = x.split('=')[1]
+            }
+        }
+    }
+
+    return csrfToken
+}
+
+function salvarOperacao() {
+    fetch('/calculadora/', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie()
+        },
+        body: JSON.stringify({parametros: '1+1', resultado: '2'})
+    }).then(v => console.log(v)).catch(e => console.log(e))
+}
+
+
+
 document.querySelector(".buttons").addEventListener("click", function (event) {
     verificarTecla(event.target.value);
 })
@@ -15,12 +43,12 @@ function verificarTecla(tecla) {
     let teclasOperadores = ['+', '-', '*', '/', '%'];
     let teclaIgual = '=';
 
-    if(tecla === 'Escape' || tecla == 'c') {
+    if (tecla === 'Escape' || tecla == 'c') {
         display.innerText = '';
         return
     }
-    
-    if(tecla === '±') {
+
+    if (tecla === '±') {
         let conteudo = display.innerText
         if (ePositivo) {
             ePositivo = false
@@ -32,14 +60,15 @@ function verificarTecla(tecla) {
         return
     }
 
-    if(tecla === 'Backspace') {
+    if (tecla === 'Backspace') {
         display.innerText = display.innerText.slice(0, -1);
         return
     }
-    
-    if(tecla === teclaIgual || tecla === 'Enter') {
+
+    if (tecla === teclaIgual || tecla === 'Enter') {
         let expressao = display.innerText.replace(/ /g, '')
         display.innerText = eval(expressao)
+        salvarOperacao()
         return;
     }
 
