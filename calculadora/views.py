@@ -18,7 +18,7 @@ class LoginView(View):
         try:
             service.login()
             messages.success(request, "Login realizado com sucesso!")
-            return render(request, "login.html")
+            return redirect("calculadora:index")
         except ValueError as e:
             messages.error(request, str(e))
             return redirect('calculadora:login')
@@ -43,3 +43,7 @@ class RegistroView(View):
         except ValueError as e:
             messages.error(request, str(e))
             return redirect('calculadora:registro')
+
+class CalculadoraView(View):
+    def get(self, request):
+        return render(request, 'calculadora.html')

@@ -2,13 +2,13 @@
 {% load static %}
 {%block title %} Register Page {% endblock %}
 {%block css%}
-<link rel="stylesheet" href="{% static 'calculadora/css/register.css'%}"> {%endblock%}
+<link rel="stylesheet" href="{% static 'calculadora/css/login_registro.css'%}"> {%endblock%}
 
 {% block content%}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-5">
-            <div class="card p-4">
+            <div class="card p-4 form-container">
                 {% include 'partials/messages.html' %}
                 <h3 class="text-center mb-4">Criar Conta</h3>
                 <form method="POST">
