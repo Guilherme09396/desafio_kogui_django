@@ -1,56 +1,65 @@
+{% extends 'base.html'%}
 {% load static %}
+{%block title %} Calculadora {% endblock %}
+{% block css %}
 <link rel="stylesheet" href="{% static 'calculadora/css/calculadora.css'%}">
+{% endblock %}
 
-<header>
-  <a href="/logout">Sair</a>
-</header>
+{% block content%}
 
-<h1>Calculadora Avançada</h1>
-<p>Calculadora com histórico de operações</p>
+<body>
+  <header>
+    <a href="/logout">Sair</a>
+  </header>
 
-<div class="container">
+  <h1>Calculadora Avançada</h1>
+  <p>Calculadora com histórico de operações</p>
 
-  {% include 'partials/messages.html' %}
-  <div class="calculator">
-    <div class="display">{{result}}</div>
-    <div class="buttons">
-      <button value="c" class="clear">C</button>
-      <button value="±">±</button>
-      <button value="%">%</button>
-      <button value="+" class="operator">+</button>
+  <div class="main-wrapper">
 
-      <button value="7">7</button>
-      <button value="8">8</button>
-      <button value="9">9</button>
-      <button value="*" class="operator">×</button>
+    {% include 'partials/messages.html' %}
+    <div class="calculator">
+      <div class="display">{{result}}</div>
+      <div class="buttons">
+        <button value="c" class="clear">C</button>
+        <button value="±">±</button>
+        <button value="%">%</button>
+        <button value="/" class="operator">/</button>
 
-      <button value="4">4</button>
-      <button value="5">5</button>
-      <button value="6">6</button>
-      <button value="-" class="operator">−</button>
+        <button value="7">7</button>
+        <button value="8">8</button>
+        <button value="9">9</button>
+        <button value="*" class="operator">×</button>
 
-      <button value="1">1</button>
-      <button value="2">2</button>
-      <button value="3">3</button>
-      <button value="+" class="operator">+</button>
+        <button value="4">4</button>
+        <button value="5">5</button>
+        <button value="6">6</button>
+        <button value="-" class="operator">−</button>
 
-      <button value="0" class="zero">0</button>
-      <button value=".">.</button>
-      <button value="=" class="equals">=</button>
+        <button value="1">1</button>
+        <button value="2">2</button>
+        <button value="3">3</button>
+        <button value="+" class="operator">+</button>
+
+        <button value="0" class="zero">0</button>
+        <button value=".">.</button>
+        <button value="=" class="equals">=</button>
+      </div>
+    </div>
+
+    <div class="history">
+      <h2>Histórico <span class="trash">🗑️</span></h2>
+
+      {% for operacao in operacoes%}
+      <div class="entry">
+        <div>{{operacao.parameters}}</div>
+
+        <div class="result">= {{operacao.result}}</div>
+        <div class="time">{{operacao.dtOfInclusion}}</div>
+      </div>
+      {% endfor %}
     </div>
   </div>
-
-  <div class="history">
-    <h2>Histórico <span class="trash">🗑️</span></h2>
-
-    {% for operacao in operacoes%}
-    <div class="entry">
-      <div>{{operacao.parameters}}</div>
-
-      <div class="result">= {{operacao.result}}</div>
-      <div class="time">{{operacao.dtOfInclusion}}</div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
-<script type="module" src="{% static 'calculadora/js/calculator.js'%}"></script>
+  <script type="module" src="{% static 'calculadora/js/calculator.js'%}"></script>
+</body>
+{% endblock %}
