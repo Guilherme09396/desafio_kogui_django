@@ -6,5 +6,5 @@ class OperacoesUsuarioLogado:
         self.user = user
     
     def execute(self):
-        operacoes = Operacao.objects.filter(idUser=self.user.id)
+        operacoes = Operacao.objects.filter(idUser=self.user.id).order_by('-dtOfInclusion')
         return operacoes

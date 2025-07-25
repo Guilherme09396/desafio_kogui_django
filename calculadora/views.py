@@ -66,3 +66,18 @@ class CalculadoraView(LoginRequiredMixin, View):
         service = CriarOperacaoService(parameters=body['parametros'], result=body['resultado'], user=user)
         service.execute()
         return HttpResponse(status=201)
+    
+
+class ResultadoCalculoView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "Você precisa estar logado para acessar esta página.")
+            return redirect(f"{self.get_login_url()}")
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get(self, request):
+        service = OperacoesUsuarioLogado(request.user)
+        operacoes = service.execute()
+        resultadoUltimaOperacao = operacoes[0].result
+        return render(request, 'calculadora.html', context={'operacoes': operacoes, 'result': resultadoUltimaOperacao})
+    
