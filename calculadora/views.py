@@ -5,6 +5,7 @@ from .services.usuario.RegisterService import RegisterService
 from .services.usuario.LoginService import LoginService
 from django.contrib import messages
 from .services.calculadora.CriarOperacaoService import CriarOperacaoService
+from .services.calculadora.OperacoesUsuarioLogado import OperacoesUsuarioLogado
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 
@@ -55,7 +56,9 @@ class CalculadoraView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
-        return render(request, 'calculadora.html')
+        service = OperacoesUsuarioLogado(request.user)
+        operacoes = service.execute()
+        return render(request, 'calculadora.html', context={'operacoes': operacoes})
     
     def post(self, request):
         user = request.user
