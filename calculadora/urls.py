@@ -9,4 +9,5 @@ urlpatterns = [
     path('auth/logout/', views.LogoutView.as_view(), name='logout'),
     path('calculadora/', views.CalculadoraView.as_view(), name='index'),
     path('calculadora/resultado/', views.ResultadoCalculoView.as_view(), name='resultado'),
+    path('calculadora/historico/apagar/', views.ApagarHistoricoView.as_view(), name='apagarHistorico'),
 ]

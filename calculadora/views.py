@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
+from django.views.generic import DeleteView
 from .services.usuario.RegisterService import RegisterService
 from .services.usuario.LoginService import LoginService
 from django.contrib import messages
 from .services.calculadora.CriarOperacaoService import CriarOperacaoService
 from .services.calculadora.OperacoesUsuarioLogado import OperacoesUsuarioLogado
+from .services.calculadora.ApagarHistorico import ApagarHistorico
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 import json
@@ -91,4 +93,19 @@ class ResultadoCalculoView(LoginRequiredMixin, View):
         else:
             resultadoUltimaOperacao = operacoes[0].result
         return render(request, 'calculadora.html', context={'operacoes': operacoes, 'result': resultadoUltimaOperacao})
+    
+class ApagarHistoricoView(LoginRequiredMixin, DeleteView):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "Você precisa estar logado para acessar esta página.")
+            return redirect(f"{self.get_login_url()}")
+        return super().dispatch(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        service = ApagarHistorico(request.user)
+        try:
+            service.execute()
+            return HttpResponse(status=200)
+        except Exception as e:
+            return HttpResponse(status=500)
     

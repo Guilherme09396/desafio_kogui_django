@@ -52,8 +52,11 @@
     </div>
 
     <div class="history">
-      <h2>Histórico <span class="trash">🗑️</span></h2>
-
+      {% if operacoes %}
+      <h2>Histórico <span data-empy="false" class="trash">🗑️</span></h2>
+      {% else %}
+      <h2>Histórico <span data-empty="true" class="trash">🗑️</span></h2>
+      {% endif%}
       {% for operacao in operacoes%}
       <div class="entry">
         <div>{{operacao.parameters}}</div>
