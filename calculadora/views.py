@@ -25,14 +25,14 @@ class LoginView(View):
         try:
             service.execute()
             messages.success(request, "Login realizado com sucesso!")
-            return redirect("calculadora:index")
+            return redirect("calculator:index")
         except ValueError as e:
             messages.error(request, str(e))
-            return redirect('calculadora:login')
+            return redirect('calculator:login')
         
 
 class RegistroView(View):
-    template_name = 'registro.html'
+    template_name = 'register.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -46,16 +46,16 @@ class RegistroView(View):
             service = RegisterService(name, email, password, password2)
             service.register()
             messages.success(request, "Usuário registrado com sucesso!")
-            return redirect("calculadora:login")
+            return redirect("calculator:login")
         except ValueError as e:
             messages.error(request, str(e))
-            return redirect('calculadora:registro')
+            return redirect('calculator:register')
 
 class LogoutView(View):
     def get(self, request):
         logout(request)
         messages.success(request, 'Usuário deslogado com sucesso!')
-        return redirect('calculadora:login')
+        return redirect('calculator:login')
 
 
 class CalculatorView(LoginRequiredMixin, View):
@@ -68,7 +68,7 @@ class CalculatorView(LoginRequiredMixin, View):
     def get(self, request):
         service = OperationsLoggedInUser(request.user)
         operations = service.execute()
-        return render(request, 'calculadora.html', context={'operacoes': operations})
+        return render(request, 'calculator.html', context={'operacoes': operations})
     
     def post(self, request):
         user = request.user
@@ -92,7 +92,7 @@ class CalculationResultView(LoginRequiredMixin, View):
             lastOperationResult = 0
         else:
             lastOperationResult = operations[0].result
-        return render(request, 'calculadora.html', context={'operacoes': operations, 'result': lastOperationResult})
+        return render(request, 'calculator.html', context={'operacoes': operations, 'result': lastOperationResult})
     
 class DeleteHistoryView(LoginRequiredMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):

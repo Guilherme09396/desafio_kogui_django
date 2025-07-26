@@ -8,7 +8,7 @@ let operatorKeys = ['+', '-', '*', '/', '%'];
 
 
 export function keyC() {
-    window.location.href = '/calculadora'
+    window.location.href = '/calculator'
     return
 }
 

@@ -1,13 +1,13 @@
 from django.urls import path
 from . import views
 
-app_name = 'calculadora'
+app_name = 'calculator'
 
 urlpatterns = [
     path('auth/login/', views.LoginView.as_view(), name='login'),
-    path('auth/register/', views.RegistroView.as_view(), name='registro'),
+    path('auth/register/', views.RegistroView.as_view(), name='register'),
     path('auth/logout/', views.LogoutView.as_view(), name='logout'),
-    path('calculadora/', views.CalculatorView.as_view(), name='index'),
-    path('calculadora/resultado/', views.CalculationResultView.as_view(), name='resultado'),
-    path('calculadora/historico/apagar/', views.DeleteHistoryView.as_view(), name='apagarHistorico'),
+    path('calculator/', views.CalculatorView.as_view(), name='index'),
+    path('calculator/result/', views.CalculationResultView.as_view(), name='result'),
+    path('calculator/history/delete/', views.DeleteHistoryView.as_view(), name='deleteHistory'),
 ]

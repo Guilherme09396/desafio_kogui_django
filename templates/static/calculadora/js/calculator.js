@@ -12,8 +12,8 @@ document.addEventListener('keydown', function (event) {
 
 document.addEventListener("DOMContentLoaded", (ev) => {
     const navType = performance.getEntriesByType('navigation')[0].type
-    if(navType == 'reload' && ev.target.URL.includes('resultado')) {
-        window.location.href = '/calculadora'
+    if(navType == 'reload' && ev.target.URL.includes('result')) {
+        window.location.href = '/calculator'
     }
 })
 

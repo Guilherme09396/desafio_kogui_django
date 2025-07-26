@@ -7,7 +7,7 @@ export function deleteHistory(btnDelete) {
         return
     }
 
-    fetch('/calculadora/historico/apagar/', {
+    fetch('/calculator/history/delete/', {
         method: 'DELETE', 
         headers: {
             'X-CSRFToken': getCookie()
@@ -16,7 +16,7 @@ export function deleteHistory(btnDelete) {
         if(res.status >= 200 && res.status < 300) {
             showToast("Histórico apagado!", 500)
             setTimeout(() => {
-                window.location.href = '/calculadora'
+                window.location.href = '/calculator'
             }, 800)
         }
 

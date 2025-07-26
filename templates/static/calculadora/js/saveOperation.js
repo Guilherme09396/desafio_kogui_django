@@ -1,7 +1,7 @@
 import {getCookie} from "./getCookie.js"
 
 export function saveOperation(parametros, resultado) {
-    fetch('/calculadora/', {
+    fetch('/calculator/', {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
@@ -9,6 +9,6 @@ export function saveOperation(parametros, resultado) {
         },
         body: JSON.stringify({parametros, resultado})
     }).then(
-        window.location.href = `/calculadora/resultado`
+        window.location.href = `/calculator/result`
     ).catch(e => console.log(e))
 }
