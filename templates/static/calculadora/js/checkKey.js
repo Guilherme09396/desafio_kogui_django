@@ -1,13 +1,12 @@
-import {saveOperation} from "./saveOperation.js"
+import { saveOperation } from "./saveOperation.js"
 
 const display = document.querySelector('.display');
 let isPositive = true
+let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+let operatorKeys = ['+', '-', '*', '/', '%'];
+let equalKey = '=';
 
 export function checkKey(key) {
-    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
-    let operatorKeys = ['+', '-', '*', '/', '%'];
-    let equalKey = '=';
-
     if (key == 'c') {
         window.location.href = '/calculadora'
         return
@@ -32,17 +31,20 @@ export function checkKey(key) {
 
     if (key === equalKey || key === 'Enter') {
         let expression = display.innerText.replace(/ /g, '')
-        expression = reformExpression(expression)
-        if(!expression.match(/\d+[+/%*-]\d+/gm)) {
+        /* 
+        “Embora .2 seja tecnicamente válido, minha calculadora normaliza entradas para 0.2 para garantir consistência e legibilidade para o usuário.”
+         */
+        if ((!expression.match(/\d+[+/%*-]\d+/) && !expression.match(/\d+[+/%*][-+]\d+/)) || expression.match(/\d+[+/%*-]\d+[+/%*-]/)) {
             display.innerText = "ERROR"
             return
         }
-        
-        if(expression.match(/\d+[/][0]/) && !expression.match(/\d+[/][0]./)) {
+
+        if (expression.match(/\d+[/][0]/) && !expression.match(/\d+[/][0]./)) {
             display.innerText = "INDEFINIDO"
             return
         }
 
+        expression = reformExpression(expression)
         display.innerText = eval(expression)
         saveOperation(expression, display.innerText)
         return;
@@ -66,5 +68,14 @@ function reformExpression(expression) {
 }
 
 function addKey(key) {
+    const parameters = display.innerText.split(' ')
+    const previousParameter = parameters[parameters.length - 1]
+    
+    if((operatorKeys.includes(key) && operatorKeys.includes(previousParameter)) && !(['*', '/', '%'].includes(previousParameter) && key == "-")) {
+        parameters[parameters.length-1] = key
+        display.innerText = parameters.join(' ');
+        return
+    }
+    
     display.innerText += ` ${key} `;
 }
