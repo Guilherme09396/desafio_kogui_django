@@ -1,8 +1,9 @@
 import {getCookie} from "./getCookie.js"
+import {showToast} from "../../toast.js"
 
 export function deleteHistory(btnDelete) {
     if(btnDelete.getAttribute('data-empty')) {
-        alert("Está vazio, nada a apagar!")
+        showToast("Está vazio, nada a apagar!", 3000, 'error')
         return
     }
 
@@ -13,12 +14,14 @@ export function deleteHistory(btnDelete) {
         },
     }).then((res) => {
         if(res.status >= 200 && res.status < 300) {
-            alert("Apagou")
-            window.location.href = '/calculadora'
+            showToast("Histórico apagado!", 500)
+            setTimeout(() => {
+                window.location.href = '/calculadora'
+            }, 800)
         }
 
         if(res.status = 500) {
-            alert("Erro")
+            showToast("Erro interno ao apagar histórico", 3000, 'error')
         } 
     }
     ).catch(e => console.log(e))

@@ -18,6 +18,8 @@
   <div class="main-wrapper">
 
     {% include 'partials/messages.html' %}
+    {% include 'partials/toast.html'%}
+
     <div class="calculator">
       {% if result %}
       <div data-result="false" class="display">{{result}}</div>
@@ -63,6 +65,10 @@
 
         <div class="result">= {{operacao.result}}</div>
         <div class="time">{{operacao.dtOfInclusion}}</div>
+      </div>
+      {% empty %}
+      <div class="entry">
+        <div class="result text-center fs-6 py-2"> Nenhuma operação registrada </div>
       </div>
       {% endfor %}
     </div>
