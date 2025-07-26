@@ -46,7 +46,7 @@ export function checkKey(key) {
 
         expression = reformExpression(expression)
         display.innerText = eval(expression)
-        saveOperation(expression, display.innerText)
+        //saveOperation(expression, display.innerText)
         return;
     }
 
@@ -59,11 +59,15 @@ export function checkKey(key) {
 }
 
 function reformExpression(expression) {
+    const number1IsNegative = expression[0] == '-' ? true : false
+    if(number1IsNegative) {
+        expression = expression.slice(1)
+    }
     const operation = expression.match(/[+*/%-]/)
     let [number1, number2] = expression.split(operation)
     number1 = Number(number1)
     number2 = Number(number2)
-    const newExpression = `${number1}${operation}${number2}`
+    const newExpression = number1IsNegative ? `-${number1}${operation}${number2}` : `${number1}${operation}${number2}`
     return newExpression
 }
 
