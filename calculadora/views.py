@@ -78,7 +78,7 @@ class CalculatorView(LoginRequiredMixin, View):
         return HttpResponse(status=201)
     
 
-class ResultadoCalculoView(LoginRequiredMixin, View):
+class CalculationResultView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(request, "Você precisa estar logado para acessar esta página.")
@@ -86,13 +86,13 @@ class ResultadoCalculoView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
-        service = OperacoesUsuarioLogado(request.user)
-        operacoes = service.execute()
-        if(not operacoes.exists()):
-            resultadoUltimaOperacao = 0
+        service = OperationsLoggedInUser(request.user)
+        operations = service.execute()
+        if(not operations.exists()):
+            lastOperationResult = 0
         else:
-            resultadoUltimaOperacao = operacoes[0].result
-        return render(request, 'calculadora.html', context={'operacoes': operacoes, 'result': resultadoUltimaOperacao})
+            lastOperationResult = operations[0].result
+        return render(request, 'calculadora.html', context={'operacoes': operations, 'result': lastOperationResult})
     
 class ApagarHistoricoView(LoginRequiredMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):
