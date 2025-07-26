@@ -20,9 +20,9 @@
     {% include 'partials/messages.html' %}
     <div class="calculator">
       {% if result %}
-      <div class="display" data-disabled="false">{{result}}</div>
+      <div data-result="false" class="display">{{result}}</div>
       {% else %}
-      <div data-disabled="false" class="display">0</div>
+      <div data-result="false" class="display">0</div>
       {% endif %}
       <div class="buttons">
         <button value="c" class="clear">C</button>

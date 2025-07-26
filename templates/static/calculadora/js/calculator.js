@@ -1,9 +1,9 @@
-import {checkKey} from './checkKey.js'
+import {checkCommand} from './checkCommand.js'
 
 document.querySelector(".buttons").addEventListener("click", function (event) {
-    checkKey(event.target.value);
+    checkCommand(event.target.value);
 })
 
 document.addEventListener('keydown', function (event) {
-    checkKey(event.key);
+    checkCommand(event.key);
 })
