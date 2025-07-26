@@ -86,6 +86,9 @@ class ResultadoCalculoView(LoginRequiredMixin, View):
     def get(self, request):
         service = OperacoesUsuarioLogado(request.user)
         operacoes = service.execute()
-        resultadoUltimaOperacao = operacoes[0].result
+        if(not operacoes.exists()):
+            resultadoUltimaOperacao = 0
+        else:
+            resultadoUltimaOperacao = operacoes[0].result
         return render(request, 'calculadora.html', context={'operacoes': operacoes, 'result': resultadoUltimaOperacao})
     

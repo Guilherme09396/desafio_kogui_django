@@ -69,7 +69,7 @@ export function keyEqual() {
     } else {
         display.innerText =  result
     }
-    //saveOperation(expression, display.innerText)
+    saveOperation(expression, display.innerText)
     display.setAttribute('data-result', 'true')
     return;
 }
