@@ -7,6 +7,7 @@ from django.contrib import messages
 from .services.calculadora.CriarOperacaoService import CriarOperacaoService
 from .services.calculadora.OperacoesUsuarioLogado import OperacoesUsuarioLogado
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import logout
 import json
 
 class LoginView(View):
@@ -47,6 +48,13 @@ class RegistroView(View):
         except ValueError as e:
             messages.error(request, str(e))
             return redirect('calculadora:registro')
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'Usuário deslogado com sucesso!')
+        return redirect('calculadora:login')
+
 
 class CalculadoraView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
