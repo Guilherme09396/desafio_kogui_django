@@ -5,8 +5,8 @@ from django.views.generic import DeleteView
 from .services.usuario.RegisterService import RegisterService
 from .services.usuario.LoginService import LoginService
 from django.contrib import messages
-from .services.calculadora.CriarOperacaoService import CriarOperacaoService
-from .services.calculadora.OperacoesUsuarioLogado import OperacoesUsuarioLogado
+from .services.calculadora.CreateOperationService import CreateOperationService
+from .services.calculadora.OperationsLoggedInUser import OperationsLoggedInUser
 from .services.calculadora.ApagarHistorico import ApagarHistorico
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
@@ -58,7 +58,7 @@ class LogoutView(View):
         return redirect('calculadora:login')
 
 
-class CalculadoraView(LoginRequiredMixin, View):
+class CalculatorView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(request, "Você precisa estar logado para acessar esta página.")
@@ -66,14 +66,14 @@ class CalculadoraView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
-        service = OperacoesUsuarioLogado(request.user)
-        operacoes = service.execute()
-        return render(request, 'calculadora.html', context={'operacoes': operacoes})
+        service = OperationsLoggedInUser(request.user)
+        operations = service.execute()
+        return render(request, 'calculadora.html', context={'operacoes': operations})
     
     def post(self, request):
         user = request.user
         body = json.loads(request.body)
-        service = CriarOperacaoService(parameters=body['parametros'], result=body['resultado'], user=user)
+        service = CreateOperationService(parameters=body['parametros'], result=body['resultado'], user=user)
         service.execute()
         return HttpResponse(status=201)
     
