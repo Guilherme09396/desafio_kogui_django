@@ -1,6 +1,4 @@
-from calculadora.services.RegisterAbc import RegisterAbc
 from calculadora.models import Usuario
-from django.contrib.auth.hashers import make_password
 
 class RegisterService():
     def __init__(self, name, email, password, password2):

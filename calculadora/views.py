@@ -20,10 +20,10 @@ class LoginView(View):
 
     def post(self, request):
         email = request.POST.get('email')
-        senha = request.POST.get('senha')
-        service = LoginService(email=email, senha=senha, request=request)
+        password = request.POST.get('senha')
+        service = LoginService(email, password, request=request)
         try:
-            service.login()
+            service.execute()
             messages.success(request, "Login realizado com sucesso!")
             return redirect("calculadora:index")
         except ValueError as e:
