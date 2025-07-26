@@ -1,4 +1,6 @@
 import {checkCommand} from './checkCommand.js'
+import {deleteHistory} from "./deleteHistory.js"
+const btnDelete = document.querySelector('.trash')
 
 document.querySelector(".buttons").addEventListener("click", function (event) {
     checkCommand(event.target.value);
@@ -14,3 +16,5 @@ document.addEventListener("DOMContentLoaded", (ev) => {
         window.location.href = '/calculadora'
     }
 })
+
+btnDelete.addEventListener("click", () => deleteHistory(btnDelete))
