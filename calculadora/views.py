@@ -7,7 +7,7 @@ from .services.usuario.LoginService import LoginService
 from django.contrib import messages
 from .services.calculadora.CreateOperationService import CreateOperationService
 from .services.calculadora.OperationsLoggedInUser import OperationsLoggedInUser
-from .services.calculadora.ApagarHistorico import ApagarHistorico
+from .services.calculadora.DeleteHistory import DeleteHistory
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 import json
@@ -94,7 +94,7 @@ class CalculationResultView(LoginRequiredMixin, View):
             lastOperationResult = operations[0].result
         return render(request, 'calculadora.html', context={'operacoes': operations, 'result': lastOperationResult})
     
-class ApagarHistoricoView(LoginRequiredMixin, DeleteView):
+class DeleteHistoryView(LoginRequiredMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(request, "Você precisa estar logado para acessar esta página.")
@@ -102,7 +102,7 @@ class ApagarHistoricoView(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
     
     def delete(self, request, *args, **kwargs):
-        service = ApagarHistorico(request.user)
+        service = DeleteHistory(request.user)
         try:
             service.execute()
             return HttpResponse(status=200)

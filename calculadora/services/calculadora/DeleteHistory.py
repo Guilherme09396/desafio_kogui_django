@@ -1,9 +1,9 @@
 from calculadora.models import Operacao
 
-class ApagarHistorico:
+class DeleteHistory:
     def __init__(self, user):
         self.user = user
     
     def execute(self):
-        operacao = Operacao.objects.filter(idUser=self.user)
-        operacao.delete()
+        operation = Operacao.objects.filter(idUser=self.user)
+        operation.delete()

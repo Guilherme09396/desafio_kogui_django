@@ -9,5 +9,5 @@ urlpatterns = [
     path('auth/logout/', views.LogoutView.as_view(), name='logout'),
     path('calculadora/', views.CalculatorView.as_view(), name='index'),
     path('calculadora/resultado/', views.CalculationResultView.as_view(), name='resultado'),
-    path('calculadora/historico/apagar/', views.ApagarHistoricoView.as_view(), name='apagarHistorico'),
+    path('calculadora/historico/apagar/', views.DeleteHistoryView.as_view(), name='apagarHistorico'),
 ]
