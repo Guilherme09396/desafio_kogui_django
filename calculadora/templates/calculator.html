@@ -54,6 +54,8 @@
     </div>
 
     <div class="history">
+    {% include 'partials/confirmDelete.html'%}
+
       {% if operacoes %}
       <h2>Histórico <span data-empy="false" class="trash">🗑️</span></h2>
       {% else %}
