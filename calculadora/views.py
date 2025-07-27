@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -11,6 +12,10 @@ from .services.calculadora.DeleteHistory import DeleteHistory
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 import json
+
+class HomeView(View):
+    def get(self, request):
+        return redirect(settings.HOME_URL)
 
 class LoginView(View):
     template_name = 'login.html'
