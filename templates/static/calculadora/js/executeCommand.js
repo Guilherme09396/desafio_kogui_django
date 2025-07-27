@@ -29,7 +29,7 @@ export function keyMore() {
     let secondNumber = content.slice(operatorIndex + 1).trim();
 
     if (secondNumber.startsWith('(-') && secondNumber.endsWith(')')) {
-        secondNumber = secondNumber.slice(2, -1); // remove "(-" e ")"
+        secondNumber = secondNumber.slice(2, -1);
     } else {
         secondNumber = `(-${secondNumber})`;
     }
@@ -48,7 +48,8 @@ export function keyEqual() {
     /* 
     “Embora .2 seja tecnicamente válido, minha calculadora normaliza entradas para 0.2 para garantir consistência e legibilidade para o usuário.”
     */
-    if (!expression.match(/^(-?\d+(\.\d+)?)[+*/%-]\(?-?\d+(\.\d+)?\)?$/)) {
+    if (!/^(-?\d+(\.\d+)?)[+*/%-]\(?-?\d+(\.\d+)?\)?$/.test(expression)) {
+        console.log("Aqui");
         display.setAttribute('data-result', 'true')
         display.innerText = "ERROR"
         return;

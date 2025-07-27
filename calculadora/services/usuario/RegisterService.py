@@ -7,7 +7,6 @@ class RegisterService():
 
     def validate_fields_not_empty(self, **kwargs):
         for key, value in kwargs.items():
-            print(key)
             if not value:
                 raise ValueError(f"Todos os campos devem ser preenchidos.")
             setattr(self, key, value)

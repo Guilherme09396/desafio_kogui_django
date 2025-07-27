@@ -20,7 +20,7 @@ export function deleteHistory(btnDelete) {
             }, 800)
         }
 
-        if(res.status = 500) {
+        if(res.status == 500) {
             showToast("Erro interno ao apagar histórico", 3000, 'error')
         } 
     }
